@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>DPDD</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='views/festival/css/main.css'>
+    <script src="views/festival/js/main.js"></script>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+</head>
+
+<body>
+    <div class="modal_control">
+        <header class="menuheader">
+            <nav class="navbar">
+                <ul>
+                    <li> <a href="#affiche"><img src="views/festival/images/DPDD_logo_blanc-1.png" alt="logo du festival" width="250" height="93"></a></li>
+                    <li> <a href="#info_anchor"> INFOS</a></li>
+                    <li><a href="#prog_anchor"> PROGRAMMATION</a> </li>
+                    <li> <a href="#billeterie_anchor">BILLETTERIE</a> </li>
+                    <li> <a href="#pratique_anchor">PRATIQUE</a></li>
+                    <li> <a href="#partenaire_anchor"> PARTENAIRES</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <nav role="navigation" id="burger">
+            <div id="menuToggle">
+                <input type="checkbox" />
+                <span></span>
+                <span></span>
+                <span></span>
+                <ul id="menu">
+                    <li> <a href="#info_anchor"> INFOS</a></li>
+                    <li><a href="#prog_anchor"> PROGRAMMATION</a> </li>
+                    <li> <a href="#billeterie_anchor">BILLETTERIE</a> </li>
+                    <li> <a href="#pratique_anchor">PRATIQUE</a></li>
+                    <li> <a href="#partenaire_anchor"> PARTENAIRES</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <section id="affiche">
+            <h1>Dancing people don't die</h1>
+            <img src="views/festival/images/concert.jpeg" alt="une foule devant un concert">
+            <div class="scroll_indicator">
+                <span></span>
+            </div>
+        </section>
+        <section id="info" class="has-text-white ">
+            <a id="info_anchor" class="anchor"></a>
+            <div data-aos="fade-left" class="presentation_div size-small">
+                <?= $mep[0]['presentation'] ?>
+                <div class="presentation_icons">
+                    <div data-aos="fade-right" class="presentation_icon">
+                        <i class="fas fa-music"></i>
+                        <p>23 concerts en place</p>
+                        <p>1 conférence</p>
+                        <p> événements gratuits</p>
+                        <p>1 plateau débat</p>
+                    </div>
+                    <div data-aos="fade-up" class="presentation_icon">
+                        <i class="fas fa-tree"></i>
+                        <p>produits locaux et régionaux</p>
+                    </div>
+                    <div data-aos="fade-left" class="presentation_icon">
+                        <i class="fas fa-wheelchair"></i>
+                        <p>accessible</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <section id="prog">
+            <a id="prog_anchor" class="anchor"></a>
+            <h1><?= $mep[0]['programmation_titre'] ?></h1>
+            <div id="filters">
+                <?php if (!empty($artistes)) echo '<button class="btn active" data-filter_target="all">Tout</button>' ?>
+                <?php foreach ($dates as $date) : ?>
+
+                    <button class="btn" data-filter_target=<?= $date['artiste_date'] ?>><?php $date =  strtotime($date['artiste_date']);
+                                                                                        $dateformated = date('d / m ', $date);
+                                                                                        echo $dateformated ?></button>
+                <?php endforeach; ?>
+            </div>
+            <div class="item_container">
+
+                <?php foreach ($artistes as $artiste) : ?>
+                    <!--
+                ARTIST FIGURES
+            -->
+
+                    <div class="filter_div show" data-filter_value=<?= $artiste['artiste_date'] ?> data-modal-target="#<?= str_replace(' ', '', $artiste['artiste_nom'])  ?>">
+                        <img src="views/festival/images/<?= $artiste['artiste_image'] ?>" alt="image de <?= $artiste['artiste_nom'] ?>">
+                        <div class="art_overlay"></div>
+                        <h2><?= $artiste['artiste_nom'] ?></h2>
+                        <h3><?= $artiste['artiste_style'] ?></h3>
+                    </div>
+                    <!--
+                ARTIST MODALS
+            -->
+
+                    <div id="<?= str_replace(' ', '', $artiste['artiste_nom']) ?>" class="modal">
+                        <div class="modal_content">
+                            <div class="modal_header">
+                                <div class="social_media">
+                                    <img src="views/festival/images/<?= $artiste['artiste_image'] ?>" alt="image de <?= $artiste['artiste_nom'] ?>" width="100" height="100">
+                                    <ul>
+                                        <?php if (!empty($artiste['artiste_facebook']))
+                                            echo "<li><a rel=\"noopener noreferrer\" target=\"_blank\" href=\"" . $artiste['artiste_facebook'] . "\"><i class=\"fab fa-facebook\" aria-hidden=\"true\"></i></a></li>"; ?>
+                                        <?php if (!empty($artiste['artiste_twitter']))
+                                            echo "<li><a rel=\"noopener noreferrer\" target=\"_blank\" href=\"" . $artiste['artiste_twitter'] . "\"><i class=\"fab fa-twitter\" aria-hidden=\"true\"></i></a></li>"; ?>
+                                        <?php if (!empty($artiste['artiste_instagram']))
+                                            echo "<li><a rel=\"noopener noreferrer\" target=\"_blank\" href=\"" . $artiste['artiste_instagram'] . "\"><i class=\"fab fa-instagram\" aria-hidden=\"true\"></i></a></li>"; ?>
+                                        <?php if (!empty($artiste['artiste_youtube']))
+                                            echo "<li><a rel=\"noopener noreferrer\" target=\"_blank\" href=\"" . $artiste['artiste_youtube'] . "\"><i class=\"fab fa-youtube\" aria-hidden=\"true\"></i></a></li>"; ?>
+                                        <?php if (!empty($artiste['artiste_spotify']))
+                                            echo "<li><a rel=\"noopener noreferrer\" target=\"_blank\" href=\"" . $artiste['artiste_spotify'] . "\"><i class=\"fab fa-spotify\" aria-hidden=\"true\"></i></a></li>"; ?>
+                                        <?php if (!empty($artiste['artiste_site_web']))
+                                            echo '<a rel=\"noopener noreferrer\" target=\"_blank\" href="' . $artiste['artiste_site_web'] . '"><h3>Site Web</h3></a>'; ?>
+                                    </ul>
+                                </div>
+                                <div class="artist_info">
+                                    <h3><?= $artiste['artiste_nom'] ?></h3>
+                                    <h3><?php $date =  strtotime($artiste['artiste_date']);
+                                        $dateformated = date('d / m', $date);
+                                        echo $dateformated ?></h3>
+                                    <h3><?= $artiste['artiste_lieu'] ?></h3>
+                                    <h3><?= $artiste['artiste_style'] ?> / <?= $artiste['artiste_provenance'] ?></h3>
+                                    <h3><?= $artiste['artiste_tarif'] ?></h3>
+
+                                </div>
+                                <div>
+
+                                </div>
+                                <span class="exit_button">&times;</span>
+                            </div>
+                            <div class="modal_descr">
+                                <?= $artiste['artiste_description'] ?>
+                            </div>
+                            <div class="iframe_container">
+                                <iframe src="https://www.youtube.com/embed/<?= $artiste['artiste_video'] ?>" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                        </div>
+
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </section>
+        <!--       BILLETERIE
+            -->
+        <section id="billeterie">
+            <a id="billeterie_anchor" class="anchor"></a>
+            <h1>BILLETTERIE</h1>
+
+            <div class="billeterie_wrapper">
+                <span class="exit_button">&times;</span>
+                <?php foreach ($billetterie as $billet) : ?>
+                    <?php $i = 0; ?>
+                    <div data-aos="flip-down" class="billet billet1">
+                        <p><?= date('d / m', strtotime($billet["billet_date"])) ?></p>
+
+                        <a rel="noopener noreferrer" target="_blank" href="<?= $billet["billet_lien"] ?>"><i class="fas fa-receipt"></i></a>
+                        <div class="hover_infos">
+                            <p>Cliquez pour plus d'infos</p>
+                        </div>
+                        <div class="active_text">
+                            <?= $billet['billet_description'] ?>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+
+
+
+            </div>
+            <div>
+                <p class="size-0">Points de vente physiques (pas de frais de loc.) :</p>
+                <p class="size-0">Guichet du Conservatoire (Chapelier Fou Ensemb7e)</p>
+                <p class="size-0">Sympathy For The Vinyl, rue des Poulets à Chalon</p>
+                <p class="size-0">Rock’n Art Café, rue Pasteur à Chalon</p>
+            </div>
+        </section>
+        <!-- AFTERMOVIE -->
+        <section id="aftermovie">
+            <h1><?= $mep[0]['aftermovie_titre'] ?></h1>
+            <div class="video_caroussel_container">
+                <div class="video_button" id="next_video"></div>
+                <div class="video_button" id="previous_video"></div>
+                <?php foreach ($caroussel_video as $video) : ?>
+                    <div class="iframe_container hidden">
+                        <iframe src="https://www.youtube.com/embed/<?= $video['aftermovie_url'] ?>" title="YouTube video player"></iframe>
+                    </div>
+                <?php endforeach; ?>
+
+                <div class="nav_dots">
+                    <?php foreach ($caroussel_video as $video) : ?>
+                        <div class="nav_dot"></div>
+                    <?php endforeach; ?>
+
+                </div>
+            </div>
+
+        </section>
+        <!--        PRATIQUE 
+            -->
+        <section id="pratique">
+            <a id="pratique_anchor" class="anchor"></a>
+            <h1>PRATIQUE</h1>
+            <div class="pratique_wrapper">
+                <div class="pratique_map">
+                    <div><iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d10929.929207858553!2d4.8452!3d46.7751!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xc38fe5353319dba7!2sLaP%C3%A9niche!5e0!3m2!1sfr!2sfr!4v1623004731538!5m2!1sfr!2sfr" width="450" height="350" style="border:0;" allowfullscreen="" loading="lazy"></iframe></div>
+
+                </div>
+                <?= $mep[0]['pratique'] ?>
+            </div>
+        </section>
+        <!-- Accessibilité -->
+        <div class="p_a_wrapper">
+            <section id="accessibilite">
+                <h1>ACCESSIBILITÉ</h1>
+                <div class="accessibilite_wrapper">
+                    <div data-aos="zoom-in-right">
+                        <i class="fas fa-wheelchair"></i>
+                        <h2>Accessible aux personnes à mobilité réduite</h2>
+                        <h3>Un accès au parking du site de l’Abattoir est prévu pour les personne à mobilité réduite</h3>
+                    </div>
+                    <div data-aos="zoom-in">
+                        <i data-aos="zoom-in" class="fas fa-volume-up"></i>
+                        <h2>Prévention risque auditive</h2>
+                        <h3>Des bouchons d’oreilles sont à disposition à l’entrée du festival</h3>
+                    </div>
+                    <div data-aos="zoom-in-left">
+                        <i data-aos="zoom-in-left" class="fas fa-syringe"></i>
+                        <h2>Prévention toxico et alcool</h2>
+                        <h3>Une association sera présente sur le site de l’Abattoir</h3>
+                    </div>
+                </div>
+            </section>
+            <!-- Partenaires -->
+            <section id="partenaires">
+                <a id="partenaire_anchor" class="anchor"></a>
+                <h1>PARTENAIRES</h1>
+                <ul>
+                    <?php foreach ($categories as $categorie) : ?>
+
+                        <li data-aos="fade-up"><a rel="noopener noreferrer" target="_blank" data-target_partenaire="#<?= $categorie['categorie_libelle'] ?>" class="partenaire_button"><?= $categorie['categorie_libelle'] ?> </a>
+                            <div class="partenaire_container hidden" id="<?= $categorie['categorie_libelle'] ?>">
+
+                                <?php foreach ($partenaires as $partenaire) : ?>
+                                    <?php if ($partenaire['partenaire_categorie'] == $categorie['categorie_id']) {
+                                        echo '<a href=' . $partenaire['partenaire_url'] . '><img class="logo" src="views/festival/images/' . $partenaire['partenaire_image'] . '" alt="logo"></a>';
+                                    } ?>
+                                <?php endforeach; ?>
+                            </div>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+
+            </section>
+        </div>
+        <section class="contact">
+            <h1>Contacts</h1>
+            <div class="contact_wrapper">
+                <?php foreach ($contacts as $contact) : ?>
+                    <div data-aos="flip-left" data-aos-duration="693" class="equipe_member">
+                        <?= $contact['contact_contenu'] ?>
+                    </div>
+                <?php endforeach; ?>
+
+            </div>
+        </section>
+        <footer>
+            <div class="footer_social">
+                <p>Follow us :
+                    <a rel="noopener noreferrer" target="_blank" href=" https://www.facebook.com/dancingpeopledontdie/"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+                    <a rel="noopener noreferrer" target="_blank" href="https://www.instagram.com/dancing_people_dont_die/"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+                </p>
+            </div>
+        </footer>
+    </div>
+</body>
+
+</html>
