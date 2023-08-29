@@ -2,16 +2,19 @@
 <html lang="en">
 <?php ob_start(); ?>
 <script>
-      tinymce.init({
+    tinymce.init({
         selector: '#pratique'
-      });
-      tinymce.init({
+    });
+    tinymce.init({
         selector: '#presentation'
-      });
-      tinymce.init({
+    });
+    tinymce.init({
         selector: '#billetterie'
-      });
-    </script>
+    });
+    tinymce.init({
+        selector: '#titre_entete'
+    });
+</script>
 <div class="container">
     <form method="POST" action="<?= URL ?>back/mise_en_page/validationModification" enctype="multipart/form-data">
         <div class="field">
@@ -27,32 +30,57 @@
             </div>
         </div>
         <div class="field">
-            <label for="pratique" class="label">Paragraph Pratique</label>
+            <label for="pratique" class="label">Paragraphe Pratique</label>
             <div class="control">
-                <textarea id="pratique" name="pratique" class="textarea" ><?= $mep['pratique']?></textarea>
+                <textarea id="pratique" name="pratique" class="textarea"><?= $mep['pratique'] ?></textarea>
             </div>
         </div>
         <div class="field">
-            <label for="presentation" class="label">Paragraph presentation</label>
+            <label for="presentation" class="label">Paragraphe presentation</label>
             <div class="control">
-                <textarea id="presentation" name="presentation" class="textarea" ><?= $mep['presentation']?></textarea>
+                <textarea id="presentation" name="presentation" class="textarea"><?= $mep['presentation'] ?></textarea>
             </div>
         </div>
         <div class="field">
-            <label for="billetterie" class="label">Paragraph billetterie</label>
+            <label for="billetterie" class="label">Paragraphe billetterie</label>
             <div class="control">
-                <textarea id="billetterie" name="billetterie" class="textarea" ><?= $mep['billetterie']?></textarea>
+                <textarea id="billetterie" name="billetterie" class="textarea"><?= $mep['billetterie'] ?></textarea>
             </div>
+        </div>
+        <div class="field">
+            <label for="titre_entete" class="label">Titre de l'entête</label>
+            <div class="control">
+                <textarea id="titre_entete" name="titre_entete" class="textarea"><?= $mep['titre_entete'] ?></textarea>
+            </div>
+        </div>
+        <div class="field">
+            <label for="billetterie" class="label">Integration playlist spotify</label>
+            <div class="control">
+                <textarea id="playlist" name="playlist" class="textarea"><?= $mep['playlist'] ?></textarea>
+            </div>
+        </div>
+        <label for="image" class="label">Image de l'entete</label>
+        <img src="<?= URL ?>views/festival/images/<?= $mep['image_entete'] ?> " style="width:50px" />
+        <div class="file">
+            <label class="file-label">
+                <input class="file-input" type="file" name="image" id="image">
+                <span class="file-cta">
+                    <span class="file-label">
+                        Choisir un fichier
+                    </span>
+                </span>
+            </label>
         </div>
         <div class="columns is-mobile is-centered has-text-centered">
             <div class="column is-half">
-                <button type="submit" class="button is-success" >Mettre à jour</button>
+                <button type="submit" class="button is-success">Mettre à jour</button>
             </div>
         </div>
-</form>
+    </form>
 </div>
+
 </html>
-<?php 
+<?php
 $content = ob_get_clean();
 $titre = "Mise en page";
 require "views/commons/template.php";

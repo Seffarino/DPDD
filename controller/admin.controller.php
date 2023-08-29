@@ -36,6 +36,10 @@ class AdminController
         }
         require_once "views/festival/festival.view.php";
     }
+    public function get_page_festival2022()
+    {
+        require_once "views/festival/festival2022.view.php";
+    }
 
     public function get_page_login()
     {

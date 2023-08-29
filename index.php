@@ -27,6 +27,10 @@ try {
     $adminController->get_page_festival();
   } else {
     $url = explode("/", filter_var($_GET['page'], FILTER_SANITIZE_URL));
+    if ($url[0] == "2022") {
+      $adminController->get_page_festival2022();
+      exit;
+    }
     if ($url[0] !== "back") throw new Exception("La page n'existe pas");
     /* Premiere partie de l'url */
     switch ($url[1]) {

@@ -126,21 +126,28 @@ class ArtistesController
             $siteweb = Securite::secureHTML($_POST['artiste_site_web']);
             $spotify = Securite::secureHTML($_POST['artiste_spotify']);
             $tarif = Securite::secureHTML($_POST['artiste_tarif']);
-
+            $image = "";
+            $prev_image = $this->artisteManager->getImageArtiste($id);
+            if ($_FILES['image']['size'] > 0) {
+                $repertoire = "views/festival/images/";
+                $image = ajoutImage($_FILES['image'], $repertoire);
+            }
             $errors = $this->fieldsVerification($nom, $date, $style, $video, $provenance, $description, $youtube, $twitter, $instagram, $facebook, $lieu, $siteweb, $spotify, $tarif);
             if (empty($errors)) {
-                $affectedrows = $this->artisteManager->modifyArtiste($id, $nom, $date, $style, $video, $provenance, $description, $youtube, $twitter, $instagram, $facebook, $lieu, $siteweb,  $spotify, $tarif);
+                $affectedrows = $this->artisteManager->modifyArtiste($id, $nom, $date, $style, $video, $provenance, $description, $youtube, $twitter, $instagram, $facebook, $lieu, $siteweb,  $spotify, $tarif, $image);
                 $_SESSION['alert'] = [
                     "message" => "L'artiste est modifié " . $affectedrows,
                     "type" => "is-success"
                 ];
+                if ($image != "") {
+                    unlink("views/festival/images/" . $prev_image);
+                }
             } else {
                 $_SESSION['alert'] = [
                     "message" => "Erreur lors de la modification de l'artiste" . implode(" ", $errors),
                     "type" => "is-alert"
                 ];
             }
-
             header('Location: ' . URL . 'back/artistes/visualisation');
         } else {
             throw new Exception("Vous n'avez pas le droit d'être là ! ");

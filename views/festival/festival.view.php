@@ -18,7 +18,7 @@
         <header class="menuheader">
             <a href="#affiche" id="logo"><img src="views/festival/images/logo_dpdd.png" alt="logo du festival" width="113" height="113"></a>
             <ul class="navbar">
-                <li> <a href="#info_anchor"> INFOS</a></li>
+                <li> <a href="#info_anchor"> Qui SOMMES-NOUS?</a></li>
                 <li><a href="#prog_anchor"> PROGRAMMATION</a> </li>
                 <li> <a href="#billeterie_anchor">BILLETTERIE</a> </li>
                 <li> <a href="#pratique_anchor">PRATIQUE</a></li>
@@ -44,8 +44,8 @@
         </nav>
 
         <section id="affiche">
-            <h1>Dancing people don't die</h1>
-            <img src="views/festival/images/concert.jpeg" alt="une foule devant un concert">
+            <h1><?= $mep[0]['titre_entete'] ?></h1>
+            <img src="<?= URL ?>views/festival/images/<?= $mep[0]['image_entete'] ?>" alt="une foule devant un concert">
             <div class="scroll_indicator">
                 <span></span>
             </div>
@@ -75,7 +75,7 @@
             </div>
 
         </section>
-
+        <section><?= $mep[0]['playlist'] ?></section>
         <section id="prog">
             <a id="prog_anchor" class="anchor"></a>
             <h1><?= $mep[0]['programmation_titre'] ?></h1>
@@ -258,7 +258,7 @@
                     <?php foreach ($formated_partenaires as $categorie => $partenaires) : ?>
 
                         <li data-aos="fade-up"><a rel="noopener noreferrer" target="_blank" data-targetpartenaire="<?= $categorie ?>" class="partenaire_button"><?= $categorie ?> </a>
-                            <div class="partenaire_container hidden" id="<?= $categorie ?>">
+                            <div class="partenaire_container" id="<?= $categorie ?>">
                                 <?php foreach ($partenaires as $partenaire) : ?>
 
                                     <?= '<a href=' . $partenaire['partenaire_url'] . '><img class="logo" src="views/festival/images/' . $partenaire['partenaire_image'] . '" alt="logo"></a>' ?>
@@ -288,7 +288,21 @@
                 <p>Follow us :
                     <a rel="noopener noreferrer" target="_blank" href=" https://www.facebook.com/dancingpeopledontdie/"><i class="fab fa-facebook" aria-hidden="true"></i></a>
                     <a rel="noopener noreferrer" target="_blank" href="https://www.instagram.com/dancing_people_dont_die/"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+                    <a rel="noopener noreferrer" target="_blank" href="https://www.youtube.com/@lapenichechalon620/featured/"><i class="fab fa-youtube" aria-hidden="true"></i></a>
                 </p>
+            </div>
+            <div class="mentions_legales">
+                <p>Le Festival Dancing People Don’t Die est organisé par LaPéniche - Association Mosaïques</p>
+                <p>Association Loi 1901 / Siège social : 52 quai Saint-Cosme, 71100 Chalon-sur-Saône / 03 85 94 05 78</p>
+                <p>Développement web :<a href="mailto:seffaramayas30@gmail.com">SEFFAR Amayas</a></p>
+                <p>
+                    Gandi SAS
+                    63, 65 Boulevard Massena
+                    75013 Paris
+                    France
+                    Tel : +33170377661
+                </p>
+                <p>Responsable de publication : <a href="mailto:com@lapeniche.org">Adrien Guitton</a> / Charte CNIL-RGPD</p>
             </div>
         </footer>
     </div>

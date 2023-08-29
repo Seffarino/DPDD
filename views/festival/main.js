@@ -92,9 +92,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
     document.querySelector("#prog_anchor").scrollIntoView();
   }
   /* Vidéo carrousel */
-  var carrousel_container = document.querySelector(
-    ".video_caroussel_container"
-  );
+  var carrousel_container = document.querySelector(".video_caroussel_container");
   var video_index = 0;
   var nav_dots = document.querySelectorAll(".nav_dot");
   var videos = carrousel_container.querySelectorAll(".iframe_container");
@@ -129,26 +127,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
   document.querySelector("#next_video").addEventListener("click", next);
   document.querySelector("#previous_video").addEventListener("click", previous);
   swap_video(0);
-  /* Partenaires
-   */
-  var partenairesButtons = document.querySelectorAll(".partenaire_button");
-  var partenaireContainer = document.querySelectorAll(".partenaire_container");
-  //Billeterie
 
-  for (var partenaireButton of partenairesButtons) {
-    partenaireButton.addEventListener("click", function (e) {
-      var foundElement = document.getElementById(
-        e.target.dataset.targetpartenaire
-      );
-      if (foundElement.classList.contains("hidden")) {
-        foundElement.classList.remove("hidden");
-        e.target.classList.add("active");
-      } else {
-        foundElement.classList.add("hidden");
-        e.target.classList.remove("active");
-      }
-    });
-  }
   var billet_container = document.querySelector(".billeterie_wrapper");
   var billets = billet_container.getElementsByClassName("billet");
   for (var billet of billets) {

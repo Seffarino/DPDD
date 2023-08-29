@@ -78,8 +78,17 @@ class ArtistesManager extends Model
         $stmt->closeCursor();
         return $this->getBdd()->lastInsertId();
     }
-
-    public function modifyArtiste($id, $nom, $date, $style, $video, $provenance, $description, $youtube, $twitter, $instagram, $facebook, $lieu, $siteweb, $spotify, $tarif)
+    public function updateImage($image, $id)
+    {
+        $req = "UPDATE `DPDD_artiste` SET `artiste_image`=:image WHERE `artiste_id` = :id";
+        $stmt = $this->getBdd()->prepare($req);
+        $stmt->bindValue(":image", $image, PDO::PARAM_STR);
+        $stmt->bindValue(":id", $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $stmt->closeCursor();
+        return $this->getBdd()->affected_rows;
+    }
+    public function modifyArtiste($id, $nom, $date, $style, $video, $provenance, $description, $youtube, $twitter, $instagram, $facebook, $lieu, $siteweb, $spotify, $tarif, $image)
     {
         $req = "UPDATE `DPDD_artiste` SET `artiste_nom`=:nom,`artiste_date`=:date,`artiste_style`=:style,`artiste_video`=:video,`artiste_provenance`=:provenance,`artiste_description`=:description,`artiste_youtube`=:youtube,`artiste_twitter`=:twitter,`artiste_instagram`=:instagram,`artiste_facebook`=:facebook,`artiste_lieu`=:lieu,`artiste_site_web`=:site_web,`artiste_spotify`=:spotify,`artiste_tarif`=:tarif WHERE `artiste_id` = :id";;
         $stmt = $this->getBdd()->prepare($req);
@@ -98,6 +107,9 @@ class ArtistesManager extends Model
         $stmt->bindValue(":id", $id, PDO::PARAM_INT);
         $stmt->bindValue(":spotify", $spotify, PDO::PARAM_STR);
         $stmt->bindValue(":tarif", $tarif, PDO::PARAM_STR);
+        if ($image != "") {
+            $this->updateImage($image, $id);
+        }
         $stmt->execute();
         $stmt->closeCursor();
         return $this->getBdd()->affected_rows;
