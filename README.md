@@ -40,11 +40,19 @@ docker compose down -v
 
 ## Base de données
 
-Aucun dump SQL complet du projet n'étant fourni dans le dépôt, un schéma minimal a été ajouté dans `docker/db/init/01-schema.sql`.
+L'initialisation MariaDB est maintenant 100% dockerisée via `docker/db/init/` :
 
-Ce schéma permet :
-- d'éviter les erreurs SQL au démarrage,
-- d'afficher le site avec des données vides,
-- de démontrer la navigation principale.
+- `01-schema.sql` crée les tables réellement utilisées par l'application,
+- `02-seed.sql` injecte automatiquement des données de démonstration (artistes, partenaires, billetterie, contacts, etc.).
 
-Si vous avez un dump officiel du projet, placez-le dans `docker/db/init/` (ou importez-le ensuite), puis recréez le volume DB pour repartir d'une base propre.
+⚠️ Les scripts d'init MariaDB ne s'exécutent que lors de la création initiale du volume.
+Pour rejouer l'initialisation complète en local :
+
+```bash
+docker compose down -v
+docker compose up --build
+```
+
+Compte admin de démo :
+- login : `admin`
+- mot de passe : `admin123`

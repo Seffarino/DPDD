@@ -1,3 +1,17 @@
+<?php
+function resolveFestivalImage(?string $imagePath): string
+{
+    if (empty($imagePath)) {
+        return 'views/festival/images/logo_dpdd.png';
+    }
+
+    if (preg_match('#^https?://#i', $imagePath) || str_starts_with($imagePath, '/')) {
+        return $imagePath;
+    }
+
+    return 'views/festival/images/' . ltrim($imagePath, '/');
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -45,7 +59,7 @@
 
         <section id="affiche">
             <h1><?= $mep[0]['titre_entete'] ?></h1>
-            <img src="<?= URL ?>views/festival/images/<?= $mep[0]['image_entete'] ?>" alt="une foule devant un concert">
+            <img src="<?= resolveFestivalImage($mep[0]['image_entete']) ?>" alt="une foule devant un concert">
             <div class="scroll_indicator">
                 <span></span>
             </div>
@@ -97,7 +111,7 @@
             -->
 
                     <div data-aos="zoom-in" class="filter_div floating" data-filtervalue="<?= $artiste['artiste_date'] ?>" data-modal-target="<?= $artiste['artiste_id']  ?>">
-                        <img src="views/festival/images/<?= $artiste['artiste_image'] ?>" alt="image de <?= $artiste['artiste_nom'] ?>">
+                        <img src="<?= resolveFestivalImage($artiste['artiste_image']) ?>" alt="image de <?= $artiste['artiste_nom'] ?>">
                         <div class="art_overlay"></div>
                         <ul class="artiste_descr">
                             <li>
@@ -118,7 +132,7 @@
                         <div class="modal_content">
                             <div class="modal_header">
                                 <div class="social_media">
-                                    <img src="views/festival/images/<?= $artiste['artiste_image'] ?>" alt="image de <?= $artiste['artiste_nom'] ?>" width="100" height="100">
+                                    <img src="<?= resolveFestivalImage($artiste['artiste_image']) ?>" alt="image de <?= $artiste['artiste_nom'] ?>" width="100" height="100">
                                     <ul>
                                         <?php if (!empty($artiste['artiste_facebook']))
                                             echo "<li><a rel=\"noopener noreferrer\" target=\"_blank\" href=\"" . $artiste['artiste_facebook'] . "\"><i class=\"fab fa-facebook\" aria-hidden=\"true\"></i></a></li>"; ?>
@@ -261,7 +275,7 @@
                             <div class="partenaire_container" id="<?= $categorie ?>">
                                 <?php foreach ($partenaires as $partenaire) : ?>
 
-                                    <?= '<a href=' . $partenaire['partenaire_url'] . '><img class="logo" src="views/festival/images/' . $partenaire['partenaire_image'] . '" alt="logo"></a>' ?>
+                                    <?= '<a href=' . $partenaire['partenaire_url'] . '><img class="logo" src="' . resolveFestivalImage($partenaire['partenaire_image']) . '" alt="logo"></a>' ?>
                                 <?php endforeach; ?>
                             </div>
 

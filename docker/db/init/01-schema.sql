@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS administrateur (
   id INT AUTO_INCREMENT PRIMARY KEY,
   login VARCHAR(191) NOT NULL,
-  password VARCHAR(255) NOT NULL
+  mdp VARCHAR(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS DPDD_artiste (
@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS DPDD_artiste (
   artiste_instagram VARCHAR(255) DEFAULT NULL,
   artiste_facebook VARCHAR(255) DEFAULT NULL,
   artiste_lieu VARCHAR(255) DEFAULT NULL,
-  artiste_image VARCHAR(255) DEFAULT NULL,
+  artiste_image VARCHAR(512) DEFAULT NULL,
   artiste_site_web VARCHAR(255) DEFAULT NULL,
   artiste_spotify VARCHAR(255) DEFAULT NULL,
   artiste_tarif VARCHAR(255) DEFAULT NULL
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS categorie_partenaires (
 CREATE TABLE IF NOT EXISTS partenaires (
   partenaire_id INT AUTO_INCREMENT PRIMARY KEY,
   partenaire_url VARCHAR(255) DEFAULT NULL,
-  partenaire_image VARCHAR(255) DEFAULT NULL,
+  partenaire_image VARCHAR(512) DEFAULT NULL,
   partenaire_ordre INT DEFAULT 0,
   categorie_id INT DEFAULT NULL,
   CONSTRAINT fk_partenaires_categorie FOREIGN KEY (categorie_id) REFERENCES categorie_partenaires(categorie_id) ON DELETE SET NULL
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS mise_en_page (
   presentation TEXT,
   billetterie TEXT,
   titre_entete VARCHAR(255) DEFAULT '',
-  image_entete VARCHAR(255) DEFAULT '',
+  image_entete VARCHAR(512) DEFAULT '',
   playlist TEXT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
