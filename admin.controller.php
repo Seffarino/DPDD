@@ -2,46 +2,49 @@
 
 require_once "models/admin.manager.php"; 
 
-class AdminController{
+class AdminController {
+
     private $adminManager;
 
-    public function __construct()
-    {
+    public function __construct(){
         $this->adminManager = new AdminManager();
     }
 
+
     public function get_page_festival(){
-        $artists = $this->adminManager->get_artiste();
+        $artistes = $this->adminManager->getArtistes();
+
         require_once "views/festival/festival.view.php";
     }
+    public function get_page_login(){
 
-    /* public function get_page_login(){
-        require_once "/htdocs/DPDD/views/view.login.php";
+        require_once "views/view.login.php";
     }
 
+
     public function connexion(){
-        if(!empty($_POST['login']) && !empty($_POST['mdp'])){
-            $login = Securite::secureHTML($_POST['login']);
-            $password = Securite::secureHTML($_POST['mdp']);
-            if($this->adminManager->isConnexionValid($login,$password)){
-                $_SESSION['access'] = "admin";
-                header('Location: '.URL."back/admin");
-            } else {
-                header('Location: '.URL."back/login");
-            }
+        if($this->adminManager->isCombinaisonValide($_POST['login'],$_POST['password'])){
+            $_SESSION['profil'] = [
+                "login"=>$_POST['login'],
+                "password"=>$_POST['password'],
+            ];
+            header("Location: " . URL . "back/admin");
+        } else {
+            throw new Exception("Le login ou le mot de passe est incorrect");
         }
     }
 
     public function get_page_admin(){
-        if(Securite::verifAccessSession()){
-            require "/htdocs/DPDD/views/view.admin.php";
+        if(!empty($_SESSION['profil'])){
+
+            require "views/view.admin.php";
         } else {
-            header('Location: '.URL."back/login");
-        } 
+            throw new Exception("Vous n'avez pas le droit d'acceder à cette page");
+        }
     }
-    
+
     public function deconnexion(){
-        session_destroy();
-        header('Location: '.URL."back/login");
-    } */
+        unset($_SESSION['profil']);
+        header("Location: " . URL . "back/login");
+    }
 }
