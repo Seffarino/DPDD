@@ -16,7 +16,7 @@
             <td><?= $partenaire['partenaire_id'] ?></td>
             <td><?= $partenaire['partenaire_url'] ?></td>
             <td><?= $partenaire['partenaire_image'] ?></td>
-            <td><?= $partenaire['partenaire_categorie'] ?></td>
+            <td><?= $partenaire['categorie_libelle'] ?></td>
             <td><?= $partenaire['partenaire_ordre'] ?></td>
             <td>
                 <form method="post" action="<?= URL ?>back/partenaires/validationSuppression" onSubmit="return confirm('Voulez-vous vraiment supprimer ?');">
