@@ -1,13 +1,23 @@
 <?php
 
-require_once "models/admin.manager.php"; 
+qrequire_once "models/admin.manager.php";
+require_once "models/partenaires.manager.php";
+require_once "models/carrousel.manager.php";
+require_once "models/billetterie.manager.php";
 
-class AdminController{
+class AdminController
+{
     private $adminManager;
+    private $partenairesManager;
+    private $carrouselManager;
+    private $billetManager;
 
     public function __construct()
     {
         $this->adminManager = new AdminManager();
+        $this->partenairesManager = new PartenairesManager();
+        $this->carrouselManager = new CarrouselManager();
+        $this->billetManager = new BilletManager();
     }
 
     public function get_page_festival(){
@@ -37,9 +47,9 @@ class AdminController{
             require "/htdocs/DPDD/views/view.admin.php";
         } else {
             header('Location: '.URL."back/login");
-        } 
+        }
     }
-    
+
     public function deconnexion(){
         session_destroy();
         header('Location: '.URL."back/login");

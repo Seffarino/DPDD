@@ -1,11 +1,17 @@
 <?php
+
 abstract class Model
 {
     private static $pdo;
 
     private static function setBdd()
     {
-        self::$pdo = new PDO("mysql:host=localhost;dbname=DPDD;charset=utf8", "root", "root");
+        self::$pdo = new PDO(
+            "mysql:host=db;port=3306;dbname=DPDD;charset=utf8",
+            "dpdd_user",
+            "dpdd_pass"
+        );
+
         self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
     }
 
@@ -14,6 +20,7 @@ abstract class Model
         if (self::$pdo === null) {
             self::setBdd();
         }
+
         return self::$pdo;
     }
 

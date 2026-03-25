@@ -3,12 +3,15 @@
 require_once "models/admin.manager.php";
 require_once "models/partenaires.manager.php";
 require_once "models/carrousel.manager.php";
+require_once "models/billetterie.manager.php";
 
 class AdminController
 {
     private $adminManager;
     private $partenairesManager;
     private $carrouselManager;
+    private $billetManager;
+
     public function __construct()
     {
         $this->adminManager = new AdminManager();
